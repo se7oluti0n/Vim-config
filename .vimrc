@@ -15,7 +15,7 @@ call vundle#begin()
 Plugin 'gmarik/Vundle.vim'
 
 " ----- Making Vim look good ------------------------------------------
-Plugin 'altercation/vim-colors-solarized'
+" Plugin 'altercation/vim-colors-solarized'
 Plugin 'tomasr/molokai'
 Plugin 'bling/vim-airline'
 
@@ -90,7 +90,7 @@ set background=dark
 "let g:solarized_termcolors=256
 
 " Set the colorscheme
-colorscheme solarized
+colorscheme molokai
 
 
 " ----- bling/vim-airline settings -----
@@ -102,7 +102,7 @@ set laststatus=2
 "     https://github.com/abertsch/Menlo-for-Powerline
 " download all the .ttf files, double-click on them and click "Install"
 " Finally, uncomment the next line
-"let g:airline_powerline_fonts = 1
+let g:airline_powerline_fonts = 1
 
 " Show PASTE if in paste mode
 let g:airline_detect_paste=1
