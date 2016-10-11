@@ -78,9 +78,6 @@ set hlsearch
 set tabstop=8 softtabstop=0 expandtab shiftwidth=4 smarttab
 syntax on
 
-set tabstop=4
-set shiftwidth=4
-set softtabstop=0 noexpandtab
 set mouse=a
 set guifont=Menlo\ for\ Powerline
 " ----- Plugin-Specific Settings --------------------------------------
