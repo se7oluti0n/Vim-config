@@ -12,10 +12,10 @@ filetype off
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
+Plugin 'FSwitch'
 Plugin 'gmarik/Vundle.vim'
 
 " ----- Making Vim look good ------------------------------------------
-" Plugin 'altercation/vim-colors-solarized'
 Plugin 'tomasr/molokai'
 Plugin 'bling/vim-airline'
 
@@ -24,12 +24,12 @@ Plugin 'scrooloose/nerdtree'
 Plugin 'jistr/vim-nerdtree-tabs'
 Plugin 'scrooloose/syntastic'
 Plugin 'xolox/vim-misc'
-Plugin 'xolox/vim-easytags'
-Plugin 'majutsushi/tagbar'
+"Plugin 'xolox/vim-easytags'
+"Plugin 'majutsushi/tagbar'
 Plugin 'kien/ctrlp.vim'
-Plugin 'vim-scripts/a.vim'
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'Valloric/ListToggle'
+Plugin 'vim-ruby/vim-ruby'
 
 " ----- Working with Git ----------------------------------------------
 Plugin 'airblade/vim-gitgutter'
@@ -51,18 +51,18 @@ Plugin 'kchmck/vim-coffee-script'
 " Highlight and strip trailing whitespace
 "Plugin 'ntpeters/vim-better-whitespace'
 " Easily surround chunks of text
-"Plugin 'tpope/vim-surround'
+Plugin 'tpope/vim-surround'
 " Align CSV files at commas, align Markdown tables, and more
 "Plugin 'godlygeek/tabular'
 " Automaticall insert the closing HTML tag
-"Plugin 'HTML-AutoCloseTag'
+Plugin 'alvan/vim-closetag'
 " Make tmux look like vim-airline (read README for extra instructions)
 "Plugin 'edkolev/tmuxline.vim'
 " All the other syntax plugins I use
 "Plugin 'ekalinin/Dockerfile.vim'
 "Plugin 'digitaltoad/vim-jade'
 "Plugin 'tpope/vim-liquid'
-"Plugin 'cakebaker/scss-syntax.vim'
+Plugin 'cakebaker/scss-syntax.vim'
 
 call vundle#end()
 
@@ -75,7 +75,7 @@ set number
 set showcmd
 set incsearch
 set hlsearch
-
+set tabstop=8 softtabstop=0 expandtab shiftwidth=4 smarttab
 syntax on
 
 set mouse=a
@@ -91,6 +91,7 @@ set background=dark
 
 " Set the colorscheme
 colorscheme molokai
+let g:molokai_original = 1
 
 
 " ----- bling/vim-airline settings -----
@@ -129,17 +130,17 @@ augroup END
 
 " ----- xolox/vim-easytags settings -----
 " Where to look for tags files
-set tags=./tags;,~/.vimtags
+"set tags=./tags;,~/.vimtags
 " Sensible defaults
-let g:easytags_events = ['BufReadPost', 'BufWritePost']
-let g:easytags_async = 1
-let g:easytags_dynamic_files = 2
-let g:easytags_resolve_links = 1
-let g:easytags_suppress_ctags_warning = 1
+"let g:easytags_events = ['BufReadPost', 'BufWritePost']
+"let g:easytags_async = 1
+"let g:easytags_dynamic_files = 2
+"let g:easytags_resolve_links = 1
+"let g:easytags_suppress_ctags_warning = 1
 
 " ----- majutsushi/tagbar settings -----
 " Open/close tagbar with \b
-nmap <silent> <leader>b :TagbarToggle<CR>
+"nmap <silent> <leader>ft :CtrlPBufTag<CR>
 " Uncomment to open tagbar automatically whenever possible
 "autocmd BufEnter * nested :call tagbar#autoopen(0)
 
@@ -162,10 +163,14 @@ augroup mydelimitMate
 augroup END
 
 "------ Taglist ------
-let Tlist_Ctags_Cmd = "/usr/bin/ctags"
-let Tlist_WinWidth = 50
-map <F4> : TlistToggle<cr>
-map <F8> :!/usr/bin/ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR>
+"let Tlist_Ctags_Cmd = "/usr/bin/ctags"
+"let Tlist_WinWidth = 50
+"map <F4> : TlistToggle<cr>
+"map <F8> :!/usr/bin/ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR>
+
+"------ ListToggle -----
+let g:lt_location_list_toggle_map = '<leader>l'
+let g:lt_quickfix_list_toggle_map = '<leader>q'
 
 "----- YouCompleteMe ---------
 let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py'
@@ -177,3 +182,47 @@ let g:ycm_confirm_extra_conf = 0
 let g:syntastic_always_populate_loc_list = 1
 let g:ycm_collect_identifiers_from_tags_files = 1
 set tags+=./.tags
+
+"-------Ctrl-P-----------
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip
+let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
+let g:ctrlp_working_path_mode = 'ra'
+
+nmap <silent> <leader>b :CtrlPBuffer<CR>
+nmap <silent> <leader>ff :CtrlPCurWD<CR>
+nmap <silent> <leader>fl :CtrlPLine<CR>
+nmap <silent> <leader>ft :CtrlPBufTag<CR>
+
+" Save current view settings on a per-window, per-buffer basis.
+function! AutoSaveWinView()
+    if !exists("w:SavedBufView")
+        let w:SavedBufView = {}
+    endif
+    let w:SavedBufView[bufnr("%")] = winsaveview()
+endfunction
+
+" Restore current view settings.
+function! AutoRestoreWinView()
+    let buf = bufnr("%")
+    if exists("w:SavedBufView") && has_key(w:SavedBufView, buf)
+        let v = winsaveview()
+        let atStartOfFile = v.lnum == 1 && v.col == 0
+        if atStartOfFile && !&diff
+            call winrestview(w:SavedBufView[buf])
+        endif
+        unlet w:SavedBufView[buf]
+    endif
+endfunction
+
+" When switching buffers, preserve window view.
+if v:version >= 700
+    autocmd BufLeave * call AutoSaveWinView()
+    autocmd BufEnter * call AutoRestoreWinView()
+endif
+
+" ---- FSwitch ----
+nmap <F4> :FSHere<CR>
+
+" ---- Close Tag ----
+" filenames like *.xml, *.html, *.xhtml, ...
+let g:closetag_filenames = "*.html.*,*.xhtml,*.phtml"
