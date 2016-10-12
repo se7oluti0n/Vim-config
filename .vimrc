@@ -27,9 +27,17 @@ Plugin 'xolox/vim-misc'
 "Plugin 'xolox/vim-easytags'
 "Plugin 'majutsushi/tagbar'
 Plugin 'kien/ctrlp.vim'
+
+"----- Auto completion -------
 Plugin 'Valloric/YouCompleteMe'
+"----- Completion for C/C++ ------
+Plugin 'rdnetto/YCM-Generator'
+Plugin 'jeaye/color_coded'
+
 Plugin 'Valloric/ListToggle'
+"----- Ruby on Rails -----
 Plugin 'vim-ruby/vim-ruby'
+Plugin 'tpope/vim-rails'
 
 " ----- Working with Git ----------------------------------------------
 Plugin 'airblade/vim-gitgutter'
@@ -75,7 +83,7 @@ set number
 set showcmd
 set incsearch
 set hlsearch
-set tabstop=8 softtabstop=0 expandtab shiftwidth=4 smarttab
+set tabstop=8 softtabstop=0 expandtab shiftwidth=2 smarttab
 syntax on
 
 set mouse=a
@@ -226,3 +234,14 @@ nmap <F4> :FSHere<CR>
 " ---- Close Tag ----
 " filenames like *.xml, *.html, *.xhtml, ...
 let g:closetag_filenames = "*.html.*,*.xhtml,*.phtml"
+
+" ---- Paste ----
+imap <C-V> :<C-R>*
+
+"----- Color coded -----
+let g:color_coded_enabled = 1
+:let g:color_coded_filetypes = ['c', 'cpp', 'objc', 'cu', 'h']
+" Disable color_coded in diff mode
+if &diff
+    let g:color_coded_enabled = 0
+endif

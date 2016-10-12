@@ -19,6 +19,10 @@ cd ~/.vim/bundle/YouCompleteMe
 git submodule update --init --recursive
 ./install.sh
 ```
+Config YouCompleteMe for C/C++
+```
+:YcmGenerateConfig
+```
 Then install remains plugins
 ```
 vim +PluginInstall
