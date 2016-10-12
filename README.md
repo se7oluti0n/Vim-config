@@ -31,3 +31,8 @@ Install exuberant ctags for create tags
 ```
 sudo apt-get install exuberant-ctags
 ```
+Update latest Vim
+```
+sudo add-apt-repository ppa:pkg-vim/vim-daily
+sudo apt-get update && sudo apt-get upgrade
+```

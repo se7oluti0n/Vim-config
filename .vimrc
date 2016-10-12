@@ -33,6 +33,7 @@ Plugin 'Valloric/YouCompleteMe'
 "----- Completion for C/C++ ------
 Plugin 'rdnetto/YCM-Generator'
 Plugin 'jeaye/color_coded'
+"Plugin 'octol/vim-cpp-enhanced-highlight'
 
 Plugin 'Valloric/ListToggle'
 "----- Ruby on Rails -----
@@ -182,7 +183,7 @@ let g:lt_quickfix_list_toggle_map = '<leader>q'
 
 "----- YouCompleteMe ---------
 let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py'
-nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR>
+nnoremap <silent> <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR>
 nnoremap <F5> :YcmForceCompileAndDiagnostics<CR>
 let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
 "Do not ask when starting vim
@@ -236,12 +237,16 @@ nmap <F4> :FSHere<CR>
 let g:closetag_filenames = "*.html.*,*.xhtml,*.phtml"
 
 " ---- Paste ----
-imap <C-V> :<C-R>*
+imap <C-V>  <C-R>*
+" ---- Navigate buffer ----
+nmap <Tab> :bnext<CR>
+nmap <S-Tab> :bprevious<CR>
 
 "----- Color coded -----
 let g:color_coded_enabled = 1
-:let g:color_coded_filetypes = ['c', 'cpp', 'objc', 'cu', 'h']
+let g:color_coded_filetypes = ['c', 'cpp', 'objc', 'cu', 'h']
 " Disable color_coded in diff mode
 if &diff
     let g:color_coded_enabled = 0
 endif
+"let g:cpp_class_scope_highlight = 1
