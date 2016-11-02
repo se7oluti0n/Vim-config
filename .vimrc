@@ -31,9 +31,10 @@ Plugin 'kien/ctrlp.vim'
 "----- Auto completion -------
 Plugin 'Valloric/YouCompleteMe'
 "----- Completion for C/C++ ------
-Plugin 'rdnetto/YCM-Generator'
-Plugin 'jeaye/color_coded'
+"Plugin 'rdnetto/YCM-Generator'
+"Plugin 'jeaye/color_coded'
 "Plugin 'octol/vim-cpp-enhanced-highlight'
+Plugin 'ervandew/supertab'
 
 Plugin 'Valloric/ListToggle'
 "----- Ruby on Rails -----
@@ -54,7 +55,7 @@ Plugin 'christoomey/vim-tmux-navigator'
 " ----- Syntax plugins ------------------------------------------------
 Plugin 'jez/vim-c0'
 Plugin 'jez/vim-ispc'
-Plugin 'kchmck/vim-coffee-script'
+Plugin 'pangloss/vim-javascript'
 
 " ---- Extras/Advanced plugins ----------------------------------------
 " Highlight and strip trailing whitespace
@@ -126,6 +127,7 @@ let g:airline#extensions#tabline#enabled = 1
 nmap <silent> <leader>t :NERDTreeTabsToggle<CR>
 " To have NERDTree always open on startup
 let g:nerdtree_tabs_open_on_console_startup = 0
+let g:nerdtree_tabs_open_on_gui_startup = 0
 
 
 " ----- scrooloose/syntastic settings -----
@@ -200,7 +202,8 @@ let g:ctrlp_working_path_mode = 'ra'
 nmap <silent> <leader>b :CtrlPBuffer<CR>
 nmap <silent> <leader>ff :CtrlPCurWD<CR>
 nmap <silent> <leader>fl :CtrlPLine<CR>
-nmap <silent> <leader>ft :CtrlPBufTag<CR>
+nmap <silent> <leader>fb :CtrlPBufTag<CR>
+nmap <silent> <leader>ft :CtrlPTag<CR>
 
 " Save current view settings on a per-window, per-buffer basis.
 function! AutoSaveWinView()
@@ -271,9 +274,9 @@ endfunction
 function! Uncomment()
   let ft = &filetype
   if ft == 'php' || ft == 'ruby' || ft == 'sh' || ft == 'make' || ft == 'python' || ft == 'perl'
-    silent s/^\#//
+    silent s/^\s*\#//
   elseif ft == 'javascript' || ft == 'c' || ft == 'cpp' || ft == 'java' || ft == 'objc' || ft == 'scala' || ft == 'go'
-    silent s:^\/\/::g
+    silent s:^\s*\/\/::g
   elseif ft == 'tex'
     silent s:^%::g
   elseif ft == 'vim'
