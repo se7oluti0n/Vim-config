@@ -40,6 +40,7 @@ Plugin 'Valloric/ListToggle'
 "----- Ruby on Rails -----
 Plugin 'vim-ruby/vim-ruby'
 Plugin 'tpope/vim-rails'
+Plugin 'tpope/vim-endwise'
 
 " ----- Working with Git ----------------------------------------------
 Plugin 'airblade/vim-gitgutter'
