@@ -29,7 +29,7 @@ Plugin 'xolox/vim-misc'
 Plugin 'kien/ctrlp.vim'
 
 "----- Auto completion -------
-Plugin 'Valloric/YouCompleteMe'
+"Plugin 'Valloric/YouCompleteMe'
 "----- Completion for C/C++ ------
 "Plugin 'rdnetto/YCM-Generator'
 "Plugin 'jeaye/color_coded'
